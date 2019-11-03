@@ -1,0 +1,149 @@
+D:/ckp/Learning/Confluent/confluent-5.3.1/logs/zookeeper-logs
+
+
+cd /cygdrive/d/ckp/Learning/Confluent/confluent-5.3.1
+
+To start Zookeeper:
+./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+ 
+To start Kafka server:
+./bin/kafka-server-start ./etc/kafka/server.properties
+
+To create topics:
+./kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test-cassandra
+./kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test-cassandra
+./kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic cassandra_connector
+
+To list topics:
+./kafka-topics --list --zookeeper localhost:2181
+./kafka-topics --list --bootstrap-server localhost:9092
+
+To delete topics:
+./kafka-topics — zookeeper localhost:2181 --delete --topic test-cassandra
+
+To start producer:
+./kafka-console-producer --broker-list localhost:9092 --topic test-cassandra
+./kafka-console-producer --broker-list localhost:9092 --topic student
+Sample message: {"student_id":120,"student_city":"Mumbai","student_fees":10000,"student_name":"CKP"}
+{"student_id":"120","student_city":"Mumbai","student_name":"CKP"}
+{"student_id":"121","student_city":"Mumbai","student_name":"CKP"}
+{"student_id":"122","student_name":"CKP"}
+{"student_id":"123","student_city":"Mumbai","student_name":"CKP"}
+{"student_id":"124","student_city":"Mumbai","student_name":"CKP"}
+{"student_id":"125","student_city":"Delhi","student_name":"CKP"}
+{"student_id":"126","student_city":"Delhi","student_name":"CKP"}
+
+To start consumer:
+./kafka-console-consumer --bootstrap-server localhost:9092 --topic test-cassandra
+./kafka-console-consumer --bootstrap-server localhost:9092 --topic student
+
+To start sink connector:
+export CLASSPATH=D:/ckp/Learning/Confluent/confluent-5.3.1/share/java/plugins/confluentinc-kafka-connect-cassandra-1.1.3/lib
+export CLASSPATH=D:/ckp/Learning/Confluent/confluent-5.3.1/share/java
+
+./bin/connect-standalone ./etc/kafka/connect-standalone.properties ./share/java/plugins/confluentinc-kafka-connect-cassandra-1.1.3/etc/sink.properties
+
+To test active connectors: curl localhost:8083/connectors
+
+Steps to start cassandra:
+cd D:\ckp\Learning\Confluent\Cassandra\apache-cassandra-3.11.4\bin
+command to run Cassandra: cassandra.bat
+command to start cqlsh: cqlsh
+
+Cassandra:
+describe keyspaces;
+
+CREATE  KEYSPACE [IF NOT EXISTS] keyspace_name 
+   WITH REPLICATION = { 
+      'class' : 'SimpleStrategy', 'replication_factor' : N } 
+     | 'class' : 'NetworkTopologyStrategy', 
+       'dc1_name' : N [, ...] 
+   }
+   [AND DURABLE_WRITES =  true|false] ;
+   
+create keyspace test with replication = {'class' : 'SimpleStrategy', 'replication_factor' : 2};
+Alter keyspace test with replication = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
+
+Use keyspace_name;
+Use test;
+
+CREATE (TABLE | COLUMNFAMILY) <tablename>  
+('<column-definition>' , '<column-definition>')  
+(WITH <option> AND <option>);
+
+OR
+
+CREATE TABLE tablename(  
+   column1 name datatype PRIMARYKEY,  
+   column2 name data type,  
+   column3 name data type.  
+   );
+   
+OR
+
+Create table TableName  
+(  
+ColumnName DataType,  
+ColumnName DataType,  
+ColumnName DataType  
+.  
+.  
+.  
+Primary key(ColumnName)  
+) with PropertyName=PropertyValue;
+
+CREATE TABLE student(  
+   student_id int PRIMARY KEY,  
+   student_name text,  
+   student_city text,  
+   student_fees varint,  
+   student_phone varint  
+   );
+   
+CREATE TABLE student(  
+   student_id text PRIMARY KEY,  
+   student_name text,  
+   student_city text,  
+   createdTime timestamp,
+   comment text 
+   );   
+
+Select * from Table_name;
+Select * from Student;
+
+ALTER TABLE table name
+ADD  new column datatype;
+
+ALTER TABLE student
+ADD comment text;
+
+INSERT INTO <tablename>  
+(<column1 name>, <column2 name>....)  
+VALUES (<value1>, <value2>....)  
+USING <option> 
+
+INSERT INTO student (student_id, student_fees, student_name) VALUES(1,5000, 'Ajeet');  
+INSERT INTO student (student_id, student_fees, student_name) VALUES(2,3000, 'Kanchan');  
+INSERT INTO student (student_id, student_fees, student_name) VALUES(3, 2000, 'Shivani');    
+
+
+
+UPDATE <tablename>  
+SET <column name> = <new value>  
+<column name> = <value>....  
+WHERE <condition>  
+
+OR
+
+Update KeyspaceName.TableName   
+Set ColumnName1=new Column1Value,  
+      ColumnName2=new Column2Value,  
+      ColumnName3=new Column3Value,  
+       .  
+       .  
+       .  
+Where ColumnName=ColumnValue  
+
+Note: When you use the UPDATE command and the given row is available, then UPDATE creates a fresh row.
+
+UPDATE student SET student_fees=10000,student_name='Rahul' WHERE student_id=2;
