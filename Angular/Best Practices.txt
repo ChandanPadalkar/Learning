@@ -1,0 +1,10 @@
+1. Use return type for functions
+2. Use camel case for variable and function names.
+3. Use let <variable_name> for local variables.
+4. Specify variable data type at time of variable declaration.
+5. Keep angular and third party imports at top and then keep component, service imports.
+6. Use hyphen beetween two words for CSS class names. For example, custom-row, search-bar rtc.
+7. Use CSS class to apply styling instead of inline style. 
+   For example, Instead of <div style='width:10px; height:20px;'>Hello World</div>
+   use <div class='custom-style'>Hello World</div> and define class in .scss file.
+8. 
