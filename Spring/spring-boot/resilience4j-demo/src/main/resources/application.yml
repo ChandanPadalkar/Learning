@@ -1,3 +1,4 @@
+server.port: 8081
 resilience4j.retry:
     instances:
       userService:
