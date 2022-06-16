@@ -10,7 +10,7 @@ public class UserService {
 
     @Retry(name = "userService", fallbackMethod = "getErrorMessage")
     public String getMessage() throws Exception {
-        System.out.println("inside getMessage : " + LocalDateTime.now());
+        System.out.println("inside getMessage method: " + LocalDateTime.now());
         throw new Exception("Error in getMessage");
     }
 
