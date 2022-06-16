@@ -3,6 +3,6 @@ resilience4j.retry:
     instances:
       userService:
         maxRetryAttempts: 5     #will do 4 retry attempts, maxAttempts attribute also working
-        waitDuration: 3s
+        waitDuration: 5s
         retryExceptions:
           - java.lang.Exception
